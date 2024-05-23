@@ -1,20 +1,16 @@
 package com.Aswat.entity;
 
+
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
-@Table( name= "categ")
-@Data
-
-public class Category {
+@Table(name = "type")
+public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String category;
-
-    // Getters and setters...
+    private String type;
 
     public Long getId() {
         return id;
@@ -24,12 +20,11 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public String getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(String type) {
+        this.type = type;
     }
-
 }

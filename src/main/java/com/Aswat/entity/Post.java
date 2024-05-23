@@ -22,6 +22,7 @@ public class Post {
     private String content;
 
 
+
     private  String postedBy;
 
 
@@ -38,8 +39,11 @@ public class Post {
 @JsonIgnore
     private Category category;
 
-
-
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name= "type_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+private Type type;
 
     @Lob
     @Column(columnDefinition = "longblob")
@@ -116,8 +120,10 @@ public class Post {
 
 
 
+    // ... code précédent ...
+
     public PostDTO getDto(){
-        PostDTO postDTO= new PostDTO();
+        PostDTO postDTO = new PostDTO();
         postDTO.setId(id);
         postDTO.setName(name);
         postDTO.setContent(content);
@@ -125,19 +131,42 @@ public class Post {
         postDTO.setDate(date);
         if (category != null) {
             postDTO.setCategoryId(category.getId());
-        }        postDTO.setByteImg(img);
+            postDTO.setCategoryName(category.getCategory()); // Ajoutez cette ligne
+        }
+        if (type != null) {
+            postDTO.setTypeId(type.getId());
+            postDTO.setTypeName(type.getType()); // Ajoutez cette ligne
+        }
+        postDTO.setByteImg(img);
         postDTO.setApproved(approved);
         postDTO.setPosted(posted);
         return postDTO;
     }
 
-    public Long getCategory() {
-        return category.getId();
+// ... code suivant ...
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
+    public Long getCategoryId() {
+        return category != null ? category.getId() : null;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+    public Long getTypeId() {
+        return type != null ? type.getId() : null;
+    }
+
 
     public boolean isApproved() {
         return approved;

@@ -2,21 +2,25 @@ package com.Aswat.Controllers;
 
 import com.Aswat.Dtos.PostDTO;
 import com.Aswat.entity.Post;
+import com.Aswat.reposistories.PostRepository;
 import com.Aswat.services.jwt.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/api/customer")
 public class PostController {
     private final PostService postService;
+
+    @Autowired
+    private PostRepository postRepository;
 
     public PostController(PostService postService) {
         this.postService = postService;
@@ -79,10 +83,15 @@ public class PostController {
 
 
     @CrossOrigin(origins = "http://localhost:3000/*")
-    @GetMapping("/posts/category/{categoryId}")
-    public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable Long categoryId) {
-        List<PostDTO> postsByCategory = postService.getPostsByCategory(categoryId);
-        return ResponseEntity.ok(postsByCategory);
+    @GetMapping("/posts/approved-by-category")
+    public ResponseEntity<List<PostDTO>> getApprovedPostsByCategory(@RequestParam String category) {
+        List<PostDTO> approvedPosts = postService.getApprovedPostsByCategory(category);
+        return ResponseEntity.ok(approvedPosts);
     }
-
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+        return postService.getPostById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

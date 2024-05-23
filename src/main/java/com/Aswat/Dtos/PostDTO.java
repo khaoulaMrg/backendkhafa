@@ -8,22 +8,18 @@ public class PostDTO {
     private Long id;
     private String name;
     private String content;
-
     private String postedBy;
     private Date date;
     private byte[] byteImg;
     private MultipartFile img;
-private Long categoryId;
-
+    private Long categoryId;
+    private String categoryName;
+    private Long typeId;
+    private String typeName;// Ajoutez ce champ
     private boolean approved;
-
-
     private boolean posted;
 
-    // Getters and setters
-
-
-
+    // Getters et Setters
 
     public Long getId() {
         return id;
@@ -48,8 +44,6 @@ private Long categoryId;
     public void setContent(String content) {
         this.content = content;
     }
-
-
 
     public String getPostedBy() {
         return postedBy;
@@ -83,13 +77,7 @@ private Long categoryId;
         this.img = img;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
-    }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
 
     public boolean isApproved() {
         return approved;
@@ -107,5 +95,35 @@ private Long categoryId;
         this.posted = posted;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 }
